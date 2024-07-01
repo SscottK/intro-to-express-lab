@@ -86,6 +86,10 @@ app.get("/shoes", (req, res) => {
   
 });
 
+app.get('*', (req, res) => {
+  res.send('<h1>This page does not exist. Please try again.</h1>')
+})
+
 app.listen(3000, () => {
   console.log("I am listening");
 });
