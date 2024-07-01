@@ -49,13 +49,16 @@ const shoes = [
 app.get("/shoes", (req, res) => {
   const minPrice = req.query.minprice;
   const maxPrice = req.query.maxprice;
-  const collectibleType = req.query.type;
+  const shoeType = req.query.type;
   const searchedShoes = [];
   shoes.forEach((shoe) => {
-    if (!minPrice && !maxPrice && shoe.type === collectibleType) {
+    if (!minPrice && !maxPrice && !shoeType) {
+      searchedShoes.push(shoe)
+    }
+    if (!minPrice && !maxPrice && shoe.type === shoeType) {
       searchedShoes.push(shoe);
     }
-    if (!collectibleType) {
+    if (!shoeType) {
       if (!maxPrice && shoe.price >= minPrice) {
         searchedShoes.push(shoe);
       }
@@ -66,7 +69,7 @@ app.get("/shoes", (req, res) => {
       if (shoe.price >= minPrice && shoe.price <= maxPrice) {
         searchedShoes.push(shoe);
       }
-    } else if (shoe.type === collectibleType) {
+    } else if (shoe.type === shoeType) {
       if (!maxPrice && shoe.price >= minPrice) {
         searchedShoes.push(shoe);
       }
@@ -79,7 +82,8 @@ app.get("/shoes", (req, res) => {
       }
     }
   });
-  res.send(searchedShoes);
+  res.send(searchedShoes)
+  
 });
 
 app.listen(3000, () => {
